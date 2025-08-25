@@ -29,17 +29,17 @@ class Solution {
     private int possible(int []bloomDay , int m , int k , int day){
         int count = 0;
         int numberboq = 0;
-        for(int i = 0 ; i < bloomDay.length ; i++){
-            if(bloomDay[i]<= day){
-                count ++;
-            }
-            else{
-                numberboq += count/k;
+        for(int i = 0; i < bloomDay.length; i++){
+            if(bloomDay[i] <= day){
+                count++;
+                if(count == k){
+                    numberboq++;
+                    count = 0;
+                }
+            } else {
                 count = 0;
-
             }
         }
-        numberboq += count/k;
         return numberboq;
         
     }
