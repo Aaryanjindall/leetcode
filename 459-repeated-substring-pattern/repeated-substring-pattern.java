@@ -4,3 +4,5 @@ class Solution {
         return ans.substring(1,ans.length()-1).contains(s);
     }
 }
+
+// abab -> bab|abab
