@@ -24,7 +24,7 @@ class Solution {
             for(int i = 0 ; i < size ; i++){
                 TreeNode curr = q.poll();
                 if(curr.left != null){
-                    if(isnull)return false;//pehla null aagya toh false aayga
+                    if(isnull)return false;//pehla null aagya toh false aayga,ab nuon null mila 
                     q.add(curr.left);
 
                 }
