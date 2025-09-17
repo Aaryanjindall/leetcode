@@ -41,13 +41,15 @@ class Solution {
 
             }
             depth ++;
-
-            if(xparent != yparent){
+            if (xparent != null && yparent != null){
+                if(xparent != yparent){
                 if(currdepthx != currdepthy)return false;
                 else {
                     return true;
                 }
             }
+            }
+            
             
         }
         return false;
