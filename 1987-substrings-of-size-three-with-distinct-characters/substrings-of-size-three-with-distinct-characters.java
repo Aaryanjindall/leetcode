@@ -1,29 +1,27 @@
 class Solution {
     public int countGoodSubstrings(String s) {
         int j = 0;
-        HashMap<Character, Integer> hm = new HashMap<>();
+        HashMap<Character,Integer> hm = new HashMap<>();
         int count = 0;
-
-        for (int i = 0; i < s.length(); i++) {
+        for(int i = 0 ; i < s.length() ; i++){
             char ch = s.charAt(i);
-            hm.put(ch, hm.getOrDefault(ch, 0) + 1);
-
-            // maintain window size = 3
-            if (i - j + 1 > 3) {
-                char leftChar = s.charAt(j);
-                hm.put(leftChar, hm.get(leftChar) - 1);
-                if (hm.get(leftChar) == 0) {
-                    hm.remove(leftChar);
+            hm.put(ch,hm.getOrDefault(ch,0)+1);
+            while(i - j + 1 > 3 || hm.get(ch)>1){
+                char cha = s.charAt(j);
+                hm.put(cha,hm.get(cha)-1);
+                if(hm.get(cha)==0){
+                    hm.remove(cha);
                 }
                 j++;
+                
             }
-
-            // check if window length == 3 and all distinct
-            if (i - j + 1 == 3 && hm.size() == 3) {
+            if(i - j + 1 == 3 && hm.size()==3){
                 count++;
-            }
+                }
+            
         }
-
         return count;
+
     }
+
 }
