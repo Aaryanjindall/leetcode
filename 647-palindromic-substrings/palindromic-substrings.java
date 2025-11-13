@@ -26,7 +26,7 @@ class Solution {
         if(a.charAt(i) == a.charAt(j)){
             return dp[i][j] = solve(dp,a,i+1,j-1);
         }
-        return dp[i][j] = 0;
+        return dp[i][j] = -1;
     } 
     
 }
