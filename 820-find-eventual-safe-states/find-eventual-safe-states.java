@@ -1,27 +1,41 @@
 class Solution {
     public List<Integer> eventualSafeNodes(int[][] graph) {
-        int n = graph.length;
-        int[] state = new int[n];  // 0 = not visited, 1 = visiting, 2 = safe
-        List<Integer> result = new ArrayList<>();
-
-        for (int i = 0; i < n; i++) {
-            if (isSafe(i, graph, state))
-                result.add(i);
+        List<List<Integer>> list = new ArrayList<>();
+        for(int i = 0 ; i < graph.length ; i++){
+            list.add(new ArrayList<>());
         }
-        return result;
-    }
-
-    private boolean isSafe(int node, int[][] graph, int[] state) {
-        if (state[node] != 0)     // agar pehle se visited hai
-            return state[node] == 2;  // safe hoga to true, warna false
-
-        state[node] = 1;  // visiting mark
-        for (int next : graph[node]) {
-            if (!isSafe(next, graph, state))  // agar koi unsafe mila
-                return false;
+        
+        int outdeg[] = new int[graph.length];
+        for (int u = 0; u < graph.length; u++) {
+            outdeg[u] = graph[u].length;  // original outdegree
+            for (int v : graph[u]) {
+                list.get(v).add(u);       // reverse edge
+            }
         }
 
-        state[node] = 2;  // sab path safe nikle → mark safe
-        return true;
+        Queue<Integer> q = new LinkedList<>();
+        List<Integer> ans = new ArrayList<>();
+        
+        for(int i = 0 ; i < outdeg.length ; i++){
+            if(outdeg[i] == 0){
+                q.add(i);
+            }
+        }
+
+
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            ans.add(node);
+
+            for (int prev : list.get(node)) {
+                outdeg[prev]--;
+                if (outdeg[prev] == 0) {
+                    q.add(prev);
+                }
+            }
+        }
+
+        Collections.sort(ans);
+        return ans;
     }
 }
