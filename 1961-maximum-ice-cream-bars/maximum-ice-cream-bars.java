@@ -6,10 +6,10 @@ class Solution {
             if(coins < costs[i]){
                 break;
             }
-            else{
+            
                 coins -= costs[i];
                 creams++;
-            }
+            
         }
         return creams;
     }
