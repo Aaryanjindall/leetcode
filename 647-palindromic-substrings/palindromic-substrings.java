@@ -2,7 +2,7 @@ class Solution {
     int count;
     public int countSubstrings(String s) {
         int n = s.length();
-        int dp[][] = new int[1001][1001];
+        int dp[][] = new int[n+1][n+1];
         for(int row[] : dp){
             Arrays.fill(row,-1);
         }
