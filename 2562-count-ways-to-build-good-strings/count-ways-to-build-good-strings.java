@@ -1,7 +1,7 @@
 class Solution {
     static final int MOD = 1_000_000_007;
     public int countGoodStrings(int low, int high, int zero, int one) {
-        int dp[] = new int[1000001];
+        int dp[] = new int[100001];
         Arrays.fill(dp,-1);
         return solve(0,dp,low,high,zero,one);
     }
