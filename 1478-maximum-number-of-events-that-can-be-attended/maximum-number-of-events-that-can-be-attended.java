@@ -13,6 +13,10 @@ class Solution {
 
         while(i < n || !pq.isEmpty()){
 
+            if(pq.isEmpty()){
+                day = events[i][0];
+            }
+
             // Add all events whose start day <= current day
             while(i < n && events[i][0] <= day){
                 pq.add(events[i][1]);
