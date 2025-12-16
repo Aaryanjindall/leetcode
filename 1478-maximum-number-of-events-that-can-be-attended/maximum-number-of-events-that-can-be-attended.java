@@ -1,10 +1,7 @@
 class Solution {
     public int maxEvents(int[][] events) {
-
         Arrays.sort(events, (a, b) -> a[0] - b[0]);
-
         PriorityQueue<Integer> pq = new PriorityQueue<>(); // stores end days
-
         int i = 0;
         int n = events.length;
         int attend = 0;
