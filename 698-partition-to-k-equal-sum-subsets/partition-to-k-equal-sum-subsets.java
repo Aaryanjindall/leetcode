@@ -8,6 +8,8 @@ class Solution {
             return false;
         }
         int tar = sum/k;
+
+        Arrays.sort(nums);
         boolean vis[] = new boolean[nums.length + 1];
         return bt(nums,tar,0,vis,0,k);
             
