@@ -1,7 +1,9 @@
 class Solution {
+    StringBuilder sb = new StringBuilder();
     public List<String> letterCombinations(String digits) {
-        if (digits == null || digits.length() == 0) return new ArrayList<>();
-        HashMap<Character,String> hm = new HashMap<>();
+        List<String> list = new ArrayList<>();
+        HashMap<Character,String>hm = new HashMap<>();
+        if(digits.length() == 0)return list;
         hm.put('2',"abc");
         hm.put('3',"def");
         hm.put('4',"ghi");
@@ -10,11 +12,10 @@ class Solution {
         hm.put('7',"pqrs");
         hm.put('8',"tuv");
         hm.put('9',"wxyz");
-        List<String> list = new ArrayList<>();
-        backtrack(list,hm,0,digits,new StringBuilder());
+        bt(list,digits,hm,0);
         return list;
     }
-    private void backtrack(List<String> list , HashMap<Character,String> hm , int curr , String digits , StringBuilder sb){
+    private void bt(List<String> list , String digits , HashMap<Character,String> hm , int curr){
         if(curr == digits.length()){
             list.add(sb.toString());
             return;
@@ -23,9 +24,8 @@ class Solution {
         String st = hm.get(ch);
         for(int i = 0 ; i < st.length() ; i++){
             sb.append(st.charAt(i));
-            backtrack(list,hm,curr+1,digits,sb);
-            sb.deleteCharAt(sb.length()-1); //bacltrack
-
+            bt(list,digits,hm,curr+1);
+            sb.deleteCharAt(sb.length()-1);
         }
     }
 }
