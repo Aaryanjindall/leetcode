@@ -1,51 +1,33 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> list = new ArrayList<>();
-        if(root == null){
-            return list;
-        }
-        Queue<TreeNode>q = new LinkedList<>();
+        Queue<TreeNode> q = new LinkedList<>();
+        if(root == null)return list;
         q.add(root);
         int level = 0;
         while(!q.isEmpty()){
-            List<Integer>lister = new ArrayList<>();
             int size = q.size();
+            List<Integer> lister = new ArrayList<>();
             for(int i = 0 ; i < size ; i++){
                 TreeNode curr = q.poll();
-                int ele = curr.val;
-                lister.add(ele);
-                if(curr.left != null){
-                    q.add(curr.left);
-                }
-                if(curr.right != null){
-                    q.add(curr.right);
-                }
-
+                lister.add(curr.val);
+                if(curr.left != null)q.add(curr.left);
+                if(curr.right != null)q.add(curr.right);
             }
             if(level%2 == 1){
-                Collections.reverse(lister);
+                int l = 0;
+                int r = lister.size()-1;
+                while(l < r){
+                    int temp = lister.get(l);
+                    lister.set(l,lister.get(r));
+                    lister.set(r,temp);
+                    l++;
+                    r--;
+                }
             }
             level++;
-            
             list.add(lister);
-            
         }
-
         return list;
     }
 }
