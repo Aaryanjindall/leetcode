@@ -12,10 +12,11 @@ class Solution {
                     odd.add(nums[j]);
                 }
                 if(even.size() == odd.size()){
-                    maxlen = Math.max(maxlen,j-i+1);
-                }
+                maxlen = Math.max(maxlen,j-i+1);
+            }
 
             }
+            
         }
         return maxlen;
     }
