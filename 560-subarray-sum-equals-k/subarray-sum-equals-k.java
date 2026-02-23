@@ -10,8 +10,8 @@ class Solution {
                 count += hm.get(sum-k);
             }
             hm.put(sum,hm.getOrDefault(sum,0)+1);
-
         }
+        
         return count;
     }
 }
