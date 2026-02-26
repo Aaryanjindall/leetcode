@@ -2,30 +2,28 @@ class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
         int n = nums.length;
-        List<List<Integer>> list = new ArrayList<>();
-        for(int i = 0 ; i < nums.length-2 ; i++){
-            int j = i + 1; 
+        List<List<Integer>> list= new ArrayList<>();
+        for(int i = 0 ; i < nums.length ; i++){
+            int j = i+1;
             int k = n-1;
-            if(i>0 && nums[i]==nums[i-1])continue;
-            while(j < k){
+            if((i>0) && nums[i]==nums[i-1])continue;
+            while(j<k){
                 int sum = 0;
-                sum = nums[j]+nums[i]+nums[k];
+                sum = nums[i]+nums[j]+nums[k];
                 if(sum < 0){
                     j++;
                 }
-                else if(sum > 0){
+                else if(sum>0){
                     k--;
                 }
                 else{
-                    list.add(Arrays.asList(nums[i], nums[j], nums[k]));
-                    while(j<k && nums[j] == nums[j+1])j++;
-                    while(j<k && nums[k]== nums[k-1])k--;
+                    list.add(Arrays.asList(nums[i],nums[j],nums[k]));
+                    while((j<k) && nums[j] == nums[j+1])j++;
+                    while((j<k) && nums[k] == nums[k-1])k--;
                     j++;
                     k--;
-                    
                 }
-
-
+               
             }
         }
         return list;
