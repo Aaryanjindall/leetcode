@@ -1,26 +1,29 @@
 class Solution {
     public int coinChange(int[] coins, int amount) {
         Arrays.sort(coins);
-        int dp[][] = new int[coins.length][amount+1];
-        for(int row[] : dp){
-            Arrays.fill(row,-1);
+        int n = coins.length;
+        int dp[][] = new int[coins.length+1][amount+1];
+        for(int d[] : dp){
+            Arrays.fill(d,-1);
         }
-        int ans = solve(dp,coins,amount,coins.length-1);
-        return (ans == (int)1e9)? -1 : ans;
+        int ans = solve(coins,amount,n-1,dp);
+        return ans == Integer.MAX_VALUE ? -1 : ans;
     }
-    private int solve(int dp[][] , int []coins , int amount , int curr){
-        if(amount == 0){
-            return 0;
+    private int solve(int coins[] , int amount , int i , int [][]dp){
+        if (amount == 0) return 0;
+        if (i < 0) return Integer.MAX_VALUE;
+        if(dp[i][amount] != -1){
+            return dp[i][amount];
         }
-        if(curr < 0) return (int)1e9;
-        if(dp[curr][amount] != -1){
-            return dp[curr][amount];
+        int take = Integer.MAX_VALUE;
+        if(amount >= coins[i]){
+            int res = solve(coins, amount - coins[i], i, dp);
+            if (res != Integer.MAX_VALUE) {
+                take = 1 + res;
+            }
         }
-        int take = (int)1e9;
-        if(coins[curr]<=amount){
-            take = 1+solve(dp,coins,amount-coins[curr],curr);
-        }
-        int skip = solve(dp,coins,amount,curr-1);
-        return dp[curr][amount] = Math.min(skip,take);
+        int skip = solve(coins,amount,i-1,dp);
+        return dp[i][amount] = Math.min(take,skip);
     }
+
 }
