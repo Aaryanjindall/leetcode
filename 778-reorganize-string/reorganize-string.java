@@ -1,27 +1,33 @@
 class Solution {
     public String reorganizeString(String s) {
+
         int n = s.length();
+
         int freq[] = new int[26];
+
         for(char ch : s.toCharArray()){
-            freq[ch - 'a']++;
+            freq[ch-'a']++;
         }
 
         for(int f : freq){
-            if(f > (n + 1) / 2){
+            if(f > (n+1)/2){
                 return "";
             }
         }
 
-        PriorityQueue<int []> pq = new PriorityQueue<>((a,b) -> b[1] - a[1]);
+        PriorityQueue<int[]> pq =
+                new PriorityQueue<>((a,b)->b[1]-a[1]);
 
         for(int i = 0 ; i < 26 ; i++){
             if(freq[i] > 0){
-                pq.add(new int[]{i, freq[i]});
+                pq.add(new int[]{i , freq[i]});
             }
         }
 
         StringBuilder sb = new StringBuilder();
+
         while(pq.size() > 1){
+
             int[] first = pq.poll();
             int[] second = pq.poll();
 
@@ -32,21 +38,19 @@ class Solution {
             second[1]--;
 
             if(first[1] > 0){
-            pq.add(first);
+                pq.add(first);
             }
-            
+
             if(second[1] > 0){
                 pq.add(second);
             }
         }
 
-        if(pq.size() > 0){
-    int[] last = pq.poll();
-    sb.append((char)(last[0] + 'a'));
-}
+        // last char (if any)
+        if(!pq.isEmpty()){
+            sb.append((char)(pq.poll()[0] + 'a'));
+        }
 
-return sb.toString();
-
-
+        return sb.toString();
     }
 }
