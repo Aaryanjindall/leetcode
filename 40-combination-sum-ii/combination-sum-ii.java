@@ -1,25 +1,28 @@
 class Solution {
-    public List<List<Integer>> combinationSum2(int[] candidates, int target){
+    public List<List<Integer>> combinationSum2(int[] cand, int tar) {
+        Arrays.sort(cand);
         List<List<Integer>> list = new ArrayList<>();
-        Arrays.sort(candidates);
-        backtrack(list,candidates,target,0,new ArrayList<>());
+        bt(list, cand, tar, 0, new ArrayList<>());
         return list;
     }
-    private void backtrack(List<List<Integer>> list , int [] candidates , int tar , int curr , List<Integer> ans){
+
+    private void bt(List<List<Integer>> list , int cand[] , int tar , int curr, List<Integer> res){
+
         if(tar == 0){
-            list.add(new ArrayList<>(ans));
+            list.add(new ArrayList<>(res));
             return;
         }
-        if(tar<0 || curr == candidates.length){
-            return;
-        }
-        for(int i = curr ; i < candidates.length ; i++){
-            if(i > curr && candidates[i]== candidates[i-1]){
-                continue;
-            }
-            ans.add(candidates[i]);
-            backtrack(list,candidates,tar-candidates[i],i+1,ans);
-            ans.remove(ans.size()-1);
+
+        for(int i = curr ; i < cand.length ; i++){
+
+            // 🔥 skip duplicates
+            if(i > curr && cand[i] == cand[i-1]) continue;
+
+            if(cand[i] > tar) break; // optimization
+
+            res.add(cand[i]);
+            bt(list, cand, tar - cand[i], i + 1, res); // no reuse
+            res.remove(res.size() - 1);
         }
     }
 }
