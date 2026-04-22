@@ -1,33 +1,26 @@
 class Solution {
-    public int smallestDivisor(int[] nums, int threshold) {
+    public int smallestDivisor(int[] nums, int th) {
         int l = 1;
-        int h = Integer.MIN_VALUE;
-
-        for(int num : nums){
-            
-            h = Math.max(h,num);
-
+        int r = 0;
+        for(int n : nums){
+            r = Math.max(r,n);
         }
-        int ans = -1;
-        while( l <= h ){
-            int mid = l + (h-l)/2;
-            long pos = possible(nums , threshold , mid);
-            if(pos <= threshold){
-                ans = mid;
-                h = mid -1;
+        while(l<r){
+            int mid = l+(r-l)/2;
+            if(find(nums,mid,th)){
+                r = mid;
             }
             else{
-                l = mid + 1;
+                l = mid+1;
             }
-
         }
-        return ans;
+        return l;
     }
-    private long possible(int []nums , int thresh , int a){
-        long sum = 0;
-        for(int i = 0 ; i < nums.length ; i++){
-            sum += (nums[i] + (long)a - 1)/a;
+    private boolean find(int []nums , int mid , int th){
+        int sum = 0;
+        for(int x : nums){
+            sum += (x+mid-1)/mid;
         }
-        return sum;
+        return sum <= th;
     }
 }
