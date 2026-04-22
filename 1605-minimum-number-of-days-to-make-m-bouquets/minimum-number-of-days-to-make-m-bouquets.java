@@ -1,46 +1,42 @@
 class Solution {
     public int minDays(int[] bloomDay, int m, int k) {
-        int l = Integer.MAX_VALUE;
-        int h = Integer.MIN_VALUE;
-        for(int bloom : bloomDay){
-            l = Math.min(l,bloom);
-            h = Math.max(h,bloom);
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for(int b : bloomDay){
+            min = Math.min(b,min);
+            max = Math.max(b,max);
         }
-        if(m*k > bloomDay.length){
-            return -1;
-        }
-        int ans = -1;
-        while(l <= h){
-            int mid = l + (h-l)/2;
-            int posdayboq = possible(bloomDay , m , k ,mid);
-            if(posdayboq >= m){
-                ans = mid;
-                h = mid -1;
+        if((long)m * k > bloomDay.length){
+    return -1;
+}
+        while(min<max){
+            int mid = min+(max-min)/2;
+            int posboq = find(bloomDay,mid,k);
+            if(posboq >= m){
+                max = mid;
             }
             else{
-                l = mid +1 ;
+                min = mid+1;
             }
-
-
         }
-        return ans;
+        return min;
 
     }
-    private int possible(int []bloomDay , int m , int k , int day){
+    private int find(int []arr , int mid , int k){
+        int boq = 0;
         int count = 0;
-        int numberboq = 0;
-        for(int i = 0; i < bloomDay.length; i++){
-            if(bloomDay[i] <= day){
+        for(int i = 0 ; i < arr.length ; i++){
+            if(arr[i]<=mid){
                 count++;
                 if(count == k){
-                    numberboq++;
+                    boq++;
                     count = 0;
                 }
-            } else {
+            }
+            else{
                 count = 0;
             }
         }
-        return numberboq;
-        
+        return boq;
     }
 }
