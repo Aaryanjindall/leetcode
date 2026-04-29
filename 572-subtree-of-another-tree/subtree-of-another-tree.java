@@ -1,22 +1,24 @@
 class Solution {
-    public boolean isSubtree(TreeNode root, TreeNode subRoot){
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
         if(root == null){
             return false;
         }
-        if(issame(root, subRoot)) return true;
-        
-        boolean left = isSubtree(root.left , subRoot);
-        boolean right = isSubtree(root.right , subRoot);
-
-        return left || right;
+        if(issame(root,subRoot)){
+            return true;
+        }
+        return isSubtree(root.left,subRoot) || isSubtree(root.right,subRoot);
     }
-    private boolean issame(TreeNode r , TreeNode t){
-        if(r == null && t == null) return true;
-        if(r == null || t == null) return false;
-
-        if(r.val != t.val){
+    private boolean issame(TreeNode root, TreeNode subRoot){
+        if(root == null && subRoot == null){
+            return true;
+        }
+        if(root == null || subRoot == null){
             return false;
         }
-        return issame(r.left , t.left) && issame(r.right , t.right);
+        if(root.val != subRoot.val){
+            return false;
+        }
+        return issame(root.left,subRoot.left) && issame(root.right,subRoot.right);
+
     }
 }
