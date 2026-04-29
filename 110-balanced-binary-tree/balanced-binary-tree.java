@@ -1,18 +1,23 @@
 class Solution {
-    public boolean isBalanced(TreeNode root){
-        return check(root) != -1;
+    public boolean isBalanced(TreeNode root) {
+        if(root == null){
+            return true;
+        }
+        return valid(root) != -1;
     }
-    private int check(TreeNode root){
+    private int valid(TreeNode root){
         if(root == null){
             return 0;
         }
-        int left = check(root.left);
-        if(left == -1)return -1;
-        int right = check(root.right);
-        if(right == -1)return -1;
-        if(Math.abs(left-right)>1){
+        int l = valid(root.left);
+        if(l == -1) return -1;
+        int r = valid(root.right);
+        if(r == -1) return -1;
+        int height = Math.max(l,r)+1;
+        if(Math.abs(l-r) > 1){
             return -1;
         }
-        return 1+Math.max(left,right);
+        return height;
     }
+
 }
