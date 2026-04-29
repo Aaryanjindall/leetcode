@@ -3,8 +3,8 @@ class Solution {
         if(root == null){
             return 0;
         }
-        int leftt = maxDepth(root.left);
-        int rightt = maxDepth(root.right);
-        return 1+Math.max(leftt,rightt);
+        int l = maxDepth(root.left);
+        int r = maxDepth(root.right);
+        return Math.max(l,r)+1;
     }
 }
