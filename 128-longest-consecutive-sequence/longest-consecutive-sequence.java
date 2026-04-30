@@ -1,32 +1,30 @@
 class Solution {
     public int longestConsecutive(int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
 
-        TreeMap<Integer,Integer> tm = new TreeMap<>();
-
-        for(int i = 0 ; i < nums.length ; i++){
-            tm.put(nums[i], 1);  // duplicate ignore ho jayenge
+        // step 1: add all elements
+        for(int num : nums){
+            set.add(num);
         }
 
-        if(tm.size() == 0){
-            return 0;
-        }
+        int max = 0;
 
-        int longest = 1;
-        int current = 1;
-        Integer prev = null;
+        // step 2: check only sequence starts
+        for(int num : set){
+            if(!set.contains(num - 1)){   // start of sequence
+                int curr = num;
+                int len = 1;
 
-        for(int key : tm.keySet()){
+                // step 3: build sequence
+                while(set.contains(curr + 1)){
+                    curr++;
+                    len++;
+                }
 
-            if(prev != null && key == prev + 1){
-                current++;      // consecutive mila
-            } else {
-                current = 1;    // naya sequence start
+                max = Math.max(max, len);
             }
-
-            longest = Math.max(longest, current);
-            prev = key;
         }
 
-        return longest;
+        return max;
     }
 }
