@@ -1,51 +1,50 @@
 class Solution {
     public boolean isValidSudoku(char[][] board) {
-        return isvalid(board,0,0);
+        return solve(board,0,0);
     }
-    private boolean isvalid(char[][]board , int row , int col){
-        if(row == 9){
+
+    private boolean solve(char [][] board , int r , int c){
+
+        if(r == 9){
             return true;
         }
-        int nextrow = row;
-        int nextcol = col+1;
-        if(nextcol == 9){
-            nextcol = 0;
-            nextrow = row+1;
+
+        if(c == 9){
+            return solve(board,r+1,0);
         }
 
-        if(board[row][col] == '.'){
-            return isvalid(board,nextrow,nextcol);
+        if(board[r][c] == '.'){
+            return solve(board,r,c+1);
         }
-        char ch = board[row][col];
-        board[row][col] = '.';
-        if(!issafe(board,row,col,ch)){
+
+        char ch = board[r][c];
+        board[r][c] = '.';
+
+        if(!isvalid(board,r,c,ch)){
             return false;
         }
-        board[row][col] = ch;
-        return isvalid(board,nextrow,nextcol);
+
+        board[r][c] = ch;
+
+        return solve(board,r,c+1); // ✅ FIX
     }
-    private boolean issafe(char[][]board,int row,int col , char ch){
-        //horizontal and vertical check
+
+    private boolean isvalid(char board[][] , int r , int c , char ch){
+
         for(int i = 0 ; i < 9 ; i++){
-            if(board[row][i] == ch){
-                return false;
-            }
-            if(board[i][col] == ch){
-                return false;
+            if(board[i][c] == ch) return false; // ✅ FIX
+            if(board[r][i] == ch) return false; // ✅ FIX
+        }
+
+        int nr = (r/3)*3;
+        int nc = (c/3)*3;
+
+        for(int i = nr ; i <= nr+2 ; i++){
+            for(int j = nc ; j <= nc+2 ; j++){
+                if(board[i][j] == ch) return false; // ✅ FIX
             }
         }
 
-
-        //ab box check
-        int sr = (row/3)*3;
-        int sc = (col/3)*3;
-        for(int i = sr ; i <= sr+2 ; i++){
-            for(int j = sc ; j <= sc+2 ; j++){
-                if(board[i][j] == ch){
-                    return false;
-                }
-            }
-        }
         return true;
     }
 }
