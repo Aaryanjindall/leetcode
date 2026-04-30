@@ -3,8 +3,9 @@ class Solution {
         if(s.length() != t.length()){
             return false;
         }
+        int max = Math.max(s.length(),t.length());
         int freq[] = new int[26];
-        for(int i = 0 ; i < s.length() ; i++){
+        for(int i = 0 ; i < max ; i++){
             char ch = s.charAt(i);
             freq[ch-'a']++;
             char cha = t.charAt(i);
