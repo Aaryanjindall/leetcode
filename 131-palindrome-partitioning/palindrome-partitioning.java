@@ -1,34 +1,31 @@
 class Solution {
     public List<List<String>> partition(String s) {
         List<List<String>> list = new ArrayList<>();
-        backtrack(s,0,list,new ArrayList<>());
+        bt(list,s,0,new ArrayList<>());
         return list;
     }
-    private void backtrack(String s , int curr , List<List<String>> list,List<String> res){
+    private void bt(List<List<String>> list , String s , int curr , List<String> lister){
         if(curr == s.length()){
-            list.add(new ArrayList<>(res));
+            list.add(new ArrayList<>(lister));
             return;
         }
-        for(int i = curr ; i < s.length(); i++){
-            char ch = s.charAt(i);
-            if(ispalen(s.substring(curr,i+1))){
-                res.add(s.substring(curr, i + 1));
-                backtrack(s,i+1,list,res);
-                res.remove(res.size()-1);
+        for(int i = curr ; i < s.length() ; i++){
+            if(check(s.substring(curr,i+1))){
+                lister.add(s.substring(curr,i+1));
+                bt(list,s,i+1,lister);
+                lister.remove(lister.size()-1);
             }
-            
         }
-        
     }
-    private boolean ispalen(String a){
-        int l = 0;
-        int r = a.length()-1;
-        while(l < r){
-            if(a.charAt(l) != a.charAt(r)){
+    private boolean check(String s){
+        int i = 0;
+        int j = s.length()-1;
+        while(i<j){
+            if(s.charAt(i)!=s.charAt(j)){
                 return false;
             }
-            l++;
-            r--;
+            i++;
+            j--;
         }
         return true;
     }
