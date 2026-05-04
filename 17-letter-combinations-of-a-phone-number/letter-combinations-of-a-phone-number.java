@@ -1,10 +1,8 @@
 class Solution {
     StringBuilder sb = new StringBuilder();
-    public List<String> letterCombinations(String digits){
+    public List<String> letterCombinations(String digits) {
+        
         List<String> list = new ArrayList<>();
-        if(digits.length() == 0){
-            return list;
-        }
         HashMap<Character,String> hm = new HashMap<>();
         hm.put('2',"abc");
         hm.put('3',"def");
@@ -14,19 +12,22 @@ class Solution {
         hm.put('7',"pqrs");
         hm.put('8',"tuv");
         hm.put('9',"wxyz");
-        bt(list,hm,digits,0,new StringBuilder());
+        bt(list,hm,digits,0);
         return list;
     }
-    private void bt(List<String> list, HashMap<Character,String> hm, String digits,int curr , StringBuilder sb){
-        if(curr == digits.length()){
-            list.add(sb.toString());
+    private void bt(List<String> list ,HashMap<Character,String> hm,String dig , int curr){
+        if(curr == dig.length()){
+            list.add(new StringBuilder(sb).toString());
             return;
         }
-        String res = hm.get(digits.charAt(curr));
-        for(int i = 0 ; i < res.length() ; i++){
-            sb.append(res.charAt(i));
-            bt(list,hm,digits,curr+1,sb);
+        
+        char ch = dig.charAt(curr);
+        String str = hm.get(ch);
+        for(int i = 0 ; i < str.length() ; i++){
+            sb.append(str.charAt(i));
+            bt(list,hm,dig,curr+1);
             sb.deleteCharAt(sb.length()-1);
         }
     }
+    
 }
