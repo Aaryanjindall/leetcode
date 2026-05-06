@@ -1,37 +1,39 @@
 class Solution {
     public void nextPermutation(int[] nums) {
-        int j = -1;
         int n = nums.length;
+        int y = -1;
         for(int i = n-2 ; i >= 0 ; i--){
             if(nums[i]<nums[i+1]){
-                j = i;
+                y = i;
                 break;
             }
         }
-        if(j == -1){
+        System.out.println(y);
+        if(y == -1){
             reverse(nums,0,n-1);
             return;
         }
-        for(int i = n-1 ; i > j; i--){
-            if(nums[i]>nums[j]){
-                swap(nums,i,j);
+        int idx = -1;
+        for(int i = n-1 ; i >= y ; i--){
+            if(nums[i]>nums[y]){
+                swap(nums,i,y);
                 break;
             }
         }
-        reverse(nums,j+1,n-1);
+        reverse(nums,y+1,n-1);
     }
-    private void swap(int nums[] , int i , int j){
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
+    private void swap(int nums[] , int x , int y){
+        int temp = nums[x];
+        nums[x] = nums[y];
+        nums[y] = temp;
     }
-    private void reverse(int nums[] , int i , int j){
-        while(i<j){
-            int temp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = temp;
-            i++;
-            j--;
+    private void reverse(int nums[] , int x , int y){
+        while(x<y){
+            int temp = nums[x];
+            nums[x] = nums[y];
+            nums[y] = temp;
+            x++;
+            y--;
         }
     }
 }
