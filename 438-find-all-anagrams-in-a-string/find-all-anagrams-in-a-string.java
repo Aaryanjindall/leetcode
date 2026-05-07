@@ -1,31 +1,29 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
-        int pl = p.length();
-        int sl = s.length();
-        int n = sl-pl;
         List<Integer> list = new ArrayList<>();
+        int sl = s.length();
+        int pl = p.length();
+        int n = sl-pl;
         for(int i = 0 ; i <= n ; i++){
-            if(checkana(s.substring(i,i+pl),p)){
+            if(check(s.substring(i,i+pl),p)){
                 list.add(i);
             }
         }
         return list;
     }
-    private boolean checkana(String a , String p){
-        if (a.length() != p.length()) return false;
+    private boolean check(String p , String s){
         int freq[] = new int[26];
-        for(int i = 0 ; i < a.length() ; i++){
-            char ch = a.charAt(i);
+        for(int i = 0 ; i < p.length() ; i++){
+            char ch = p.charAt(i);
             freq[ch-'a']++;
-            char cha = p.charAt(i);
+            char cha = s.charAt(i);
             freq[cha-'a']--;
         }
-        for(int n : freq){
-            if(n != 0){
+        for(int i : freq){
+            if(i != 0){
                 return false;
             }
         }
         return true;
-
     }
 }
