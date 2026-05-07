@@ -1,34 +1,27 @@
 class Solution {
     public long countSubarrays(int[] nums, int k) {
-
-        HashMap<Integer, Integer> hm = new HashMap<>();
-
         int n = nums.length;
+        long total = (long) n * (n + 1) / 2;
         int max = 0;
-
-        for (int i = 0; i < n; i++) {
-            max = Math.max(max, nums[i]);
+        for(int i : nums){
+            max = Math.max(i,max);
         }
-
-        long totalSub = (long) n * (n + 1) / 2;
-
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        long atmost = 0;
         int j = 0;
-        long atMost = 0;
-
-        for (int i = 0; i < n; i++) {
-            hm.put(nums[i], hm.getOrDefault(nums[i], 0) + 1);
-
-            while (hm.getOrDefault(max, 0) > k - 1) {
-                hm.put(nums[j], hm.get(nums[j]) - 1);
-                if (hm.get(nums[j]) == 0) {
+        for(int i = 0 ; i < nums.length ; i++){
+            hm.put(nums[i],hm.getOrDefault(nums[i],0)+1);
+            while(hm.getOrDefault(max, 0) >= k){
+                hm.put(nums[j],hm.get(nums[j])-1);
+                if(hm.get(nums[j]) == 0){
                     hm.remove(nums[j]);
                 }
                 j++;
             }
-
-            atMost += (i - j + 1);
+            atmost += i-j+1;
         }
 
-        return totalSub - atMost;
+        return total - atmost;
+
     }
 }
