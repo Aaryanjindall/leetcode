@@ -1,29 +1,22 @@
 class Solution {
     public TreeNode buildTree(int[] inorder, int[] postorder) {
-        return solve(inorder , 0 , inorder.length -1 ,postorder ,  0 , postorder.length - 1);
+        TreeNode root = construct(inorder,0,inorder.length-1 , postorder, 0, postorder.length-1);
+        return root;
     }
-    private TreeNode solve(int [] inorder , int instart , int inend , int [] postorder , int postart , int postend){
-        if(instart > inend || postart > postend){
+    private TreeNode construct(int [] inorder , int inst , int inend , int [] postorder , int post , int postend){
+        if(inst > inend || post > postend){
             return null;
         }
-        int rootval = postorder[postend];
-
-        TreeNode root = new TreeNode(rootval);
-        int rootidx = -1;
-        for(int i = instart ; i <= inend ; i++){
-            if(inorder[i] == rootval){
-                rootidx = i;
-                break;
+        TreeNode root = new TreeNode(postorder[postend]);
+        int idx = -1;
+        for(int i = inst ; i <= inend ; i++){
+            if(inorder[i] == root.val){
+                idx = i;
             }
         }
-
-        int leftsize = rootidx - instart;
-
-        root.left = solve(inorder , instart , rootidx -1 ,postorder, postart , postart+leftsize-1);
-        root.right = solve(inorder , rootidx +1 , inend , postorder , postart + leftsize , postend -1 );
-
+        int leftsize = idx-inst;
+        root.left = construct(inorder,inst,idx-1,postorder,post,post+leftsize-1);
+        root.right = construct(inorder,idx+1,inend,postorder,post+leftsize,postend-1);
         return root;
-
-        
     }
 }
