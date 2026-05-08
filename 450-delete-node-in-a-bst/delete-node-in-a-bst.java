@@ -1,32 +1,34 @@
 class Solution {
     public TreeNode deleteNode(TreeNode root, int key) {
-        if(root == null)return null;
-     if(key > root.val){
-            root.right = deleteNode(root.right,key);
+        if(root == null){
+            return null;
         }
-        else if(key < root.val){
+        if(root.val < key){
+            root.right = deleteNode(root.right,key);
+            return root;
+        }
+        else if(root.val > key){
             root.left = deleteNode(root.left,key);
+            return root;
         }
         else{
-            //agr leaf h 
+            //leaf
             if(root.left == null && root.right == null){
                 return null;
             }
-            //agr ek bacha h
-            if(root.left == null){
+            else if(root.left == null){
                 return root.right;
             }
-            if(root.right == null){
+            else if(root.right == null){
                 return root.left;
             }
-            //agr do bache h 
-            TreeNode succ = inordersucc(root.right);
-            root.val = succ.val;
-            root.right = deleteNode(root.right,succ.val);
-            
+            else{
+                TreeNode succ = inordersucc(root.right);
+                root.val = succ.val;
+                root.right = deleteNode(root.right,succ.val);
+                return root;
+            }
         }
-return root;
-
     }
     private TreeNode inordersucc(TreeNode root){
         while(root.left != null){
