@@ -1,30 +1,37 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
-    public TreeNode buildTree(int[] preorder, int[] inorder){
-        return solve(preorder , 0 , preorder.length -1 ,inorder ,  0 , inorder.length - 1);
+    public TreeNode buildTree(int[] pre, int[] in) {
+        TreeNode root = construct(pre,0,pre.length-1 , in , 0, in.length-1);
+        return root;
     }
-    private TreeNode solve(int [] preorder , int prestart , int prend , int [] inorder , int instart , int inend){
-        if(instart > inend || prestart > prend){
+    private TreeNode construct(int []pre , int prest , int preend , int ino[] , int inst , int inend){
+        if(prest > preend || inst > inend){
             return null;
         }
-        int rootval = preorder[prestart];
-
-        TreeNode root = new TreeNode(rootval);
-        int rootidx = -1;
-        for(int i = instart ; i <= inend ; i++){
-            if(inorder[i] == rootval){
-                rootidx = i;
-                break;
+        TreeNode root = new TreeNode(pre[prest]);
+        int idx = -1;
+        for(int i = inst ; i <= inend ; i++){
+            if(root.val == ino[i]){
+                idx = i;
             }
         }
-
-        int leftsize = rootidx - instart;
-        
-
-        root.left = solve(preorder , prestart +1 , prestart+leftsize ,inorder, instart,rootidx -1);
-        root.right = solve(preorder , prestart + leftsize + 1  , prend , inorder , rootidx +1 , inend );
-
+        int leftsize = idx-inst;
+        root.left = construct(pre,prest+1,prest+leftsize,ino,inst,idx-1);
+        root.right = construct(pre,prest+leftsize+1,preend,ino,idx+1,inend);
         return root;
-
-        
     }
 }
