@@ -2,7 +2,6 @@ class Solution {
     public TreeNode buildTree(int[] inorder, int[] postorder) {
         return solve(inorder , 0 , inorder.length -1 ,postorder ,  0 , postorder.length - 1);
     }
-
     private TreeNode solve(int [] inorder , int instart , int inend , int [] postorder , int postart , int postend){
         if(instart > inend || postart > postend){
             return null;
