@@ -10,5 +10,6 @@ class Solution {
             ans[i] = ans[i]*suffix;
             suffix *= nums[i];
         }
-        return ans;   
-}}
+        return ans;
+    }
+}
