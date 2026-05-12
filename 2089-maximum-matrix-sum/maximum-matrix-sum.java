@@ -1,6 +1,5 @@
 class Solution {
     public long maxMatrixSum(int[][] matrix) {
-        long ans = 0;
         int neg = 0;
         int n = matrix.length;
         int m = matrix[0].length;
