@@ -1,51 +1,44 @@
 class Solution {
     public String minWindow(String s, String t) {
-        if (t.length() > s.length()) return "";
-
-        HashMap<Character, Integer> hm = new HashMap<>();
-
-        // frequency map of t
-        for (int k = 0; k < t.length(); k++) {
-            char ch = t.charAt(k);
-            hm.put(ch, hm.getOrDefault(ch, 0) + 1);
+        if(t.length()>s.length()){
+            return "";
         }
-
-        int requiredCount = t.length();
-        int i = 0, j = 0;
-
-        int start = 0;
-        int minLen = Integer.MAX_VALUE;
-
-        while (j < s.length()) {
-            char ch = s.charAt(j);
-
-            if (hm.containsKey(ch)) {
-                if (hm.get(ch) > 0) {
-                    requiredCount--;
+        int count = t.length();
+        HashMap<Character,Integer> hm = new HashMap<>();
+        for(int i = 0 ; i < t.length() ; i++){
+            hm.put(t.charAt(i),hm.getOrDefault(t.charAt(i),0)+1);
+        }
+        int j = 0;
+        int st = 0;
+        int len = 0;
+        int minlen = Integer.MAX_VALUE;
+        for(int i = 0 ; i < s.length() ; i++){
+            char ch = s.charAt(i);
+            if(hm.containsKey(ch)){
+                if(hm.get(ch)>0){
+                    count--;
                 }
-                hm.put(ch, hm.get(ch) - 1);
+                hm.put(ch,hm.get(ch)-1);
             }
-
-            // valid window found
-            while (requiredCount == 0) {
-                int currLen = j - i + 1;
-                if (currLen < minLen) {
-                    minLen = currLen;
-                    start = i;
+            while(count == 0){
+                len = i-j+1;
+                if(len < minlen){
+                    st = j;
+                    minlen = len;
                 }
-
-                char leftChar = s.charAt(i);
-                if (hm.containsKey(leftChar)) {
-                    hm.put(leftChar, hm.get(leftChar) + 1);
-                    if (hm.get(leftChar) > 0) {
-                        requiredCount++;
+                char cha = s.charAt(j);
+                if(hm.containsKey(cha)){
+                    hm.put(cha,hm.get(cha)+1);
+                    if(hm.get(cha)>0){
+                        count++;
                     }
                 }
-                i++;
+                j++;
             }
-            j++;
         }
-
-        return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
+        if(minlen == Integer.MAX_VALUE){
+            return "";
+        }
+        return s.substring(st,st+minlen);
     }
 }
