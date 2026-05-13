@@ -1,44 +1,41 @@
 class Solution {
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
+    public boolean canFinish(int n, int[][] prerequisites) {
+        //directed cycle q 
+        //agr cycle bngyi toh false else true
         List<List<Integer>> list = new ArrayList<>();
-        for(int i = 0 ; i < numCourses ; i++){
+        for(int i = 0 ; i < n ; i++){
             list.add(new ArrayList<>());
-
         }
-        for(int num[] : prerequisites){
-            list.get(num[1]).add(num[0]);
+        for(int pre[] : prerequisites){
+            int u = pre[0];
+            int v = pre[1];
+            list.get(v).add(u);
         }
-
-        boolean vis[] = new boolean [numCourses];
-        boolean recstack[] = new boolean [numCourses];
-
-        for(int i = 0 ; i < numCourses ; i++){
+        boolean vis[] = new boolean[n];
+        boolean rec[] = new boolean[n];
+        for(int i = 0 ; i < n ; i++){
             if(!vis[i]){
-                if(dfs(list,vis,recstack,i)){
+                if(check(n,list,i,vis,rec)){
                     return false;
                 }
             }
         }
         return true;
     }
-    private boolean dfs(List<List<Integer>> list , boolean vis[] , boolean recstack[] , int curr){
+    private boolean check(int n , List<List<Integer>> list , int curr , boolean vis[] , boolean rec[]){
         vis[curr] = true;
-        recstack[curr] = true;
-
+        rec[curr] = true;
         for(int neigh : list.get(curr)){
             if(!vis[neigh]){
-                if(dfs(list,vis,recstack,neigh)){
+                if(check(n,list,neigh,vis,rec)){
                     return true;
                 }
             }
-            else if(recstack[neigh]){
+            else if(rec[neigh] == true){
                 return true;
             }
         }
-
-        recstack[curr] = false;//backtrack karte time
+        rec[curr] = false;
         return false;
-
-
     }
 }
