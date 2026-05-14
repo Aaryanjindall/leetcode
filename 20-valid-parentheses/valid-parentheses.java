@@ -1,29 +1,31 @@
 class Solution {
     public boolean isValid(String s) {
-        if(s.length() % 2 != 0){
+        if(s.length() %2 != 0){
             return false;
         }
         Stack<Character> st = new Stack<>();
-        for(char ch : s.toCharArray()){
+        for(int i = 0 ; i < s.length() ; i++){
+            char ch = s.charAt(i);
             if(ch == '(' || ch == '[' || ch == '{'){
                 st.push(ch);
             }
-            else {
-                if (st.isEmpty()) {
-                    return false;
-                }
-                char top = st.peek();
-                if (
-                    (ch == ')' && top == '(') ||
-                    (ch == ']' && top == '[') ||
-                    (ch == '}' && top == '{')
-                ) {
-                    st.pop();
-                } else {
-                    return false;
-                }
+            else{
+
+            
+            if(st.isEmpty()){
+                return false;
             }
+                char top = st.peek();
+                if((s.charAt(i) == ')' && top == '(') || s.charAt(i) == ']' && top == '[' || s.charAt(i) == '}' && top == '{'){
+                    st.pop();
+                }
+                else{
+                    return false;
+                }
+                }
+            
+            
         }
-        return st.size() == 0;
+        return st.isEmpty();
     }
 }
