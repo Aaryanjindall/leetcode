@@ -1,37 +1,41 @@
 class Solution {
-    public int numEnclaves(int[][] grid) {
-        int rows = grid.length;
-        int cols = grid[0].length;
+    public int numEnclaves(int[][] board) {
+        int n = board.length;
+        int m = board[0].length;
         int count = 0;
-
-        for(int j = 0 ; j < cols ; j++){
-            if(grid[0][j] == 1)dfs(grid,rows,cols,0,j);
-            if(grid[rows-1][j] == 1)dfs(grid,rows,cols,rows-1,j);
+        boolean vis[][] = new boolean[n][m];
+        for(int i = 0 ; i < n ; i++){
+            if(board[i][0] == 1)dfs(vis,i,0,board);
+            if(board[i][m-1] == 1)dfs(vis,i,m-1,board);
         }
-        for(int i = 0 ; i < rows ; i++){
-            if(grid[i][0] == 1)dfs(grid,rows,cols,i,0);
-            if(grid[i][cols-1] == 1)dfs(grid,rows,cols,i,cols-1);
+        for(int j = 0 ; j < m ; j++){
+            if(board[0][j] == 1)dfs(vis,0,j,board);
+            if(board[n-1][j] == 1)dfs(vis,n-1,j,board);
         }
-
-        for(int i = 0 ; i < rows ; i++){
-            for(int j = 0 ; j < cols ; j++){
-                if(grid[i][j] == 1){
+        for(int i = 0 ; i < n ; i++){
+            for(int j = 0 ; j < m ; j++){
+                if(board[i][j] == 1 && !vis[i][j]){
                     count++;
                 }
             }
         }
-
         return count;
-
     }
-    private void dfs(int [][] grid , int r , int c , int i , int j){
-        if(i < 0 || i >= r || j < 0 || j >= c)return;
-        if(grid[i][j] == 0)return;
-        grid[i][j] = 0;
-        dfs(grid,r,c,i-1,j);
-        dfs(grid,r,c,i,j-1);
-        dfs(grid,r,c,i,j+1);
-        dfs(grid,r,c,i+1,j);
-
+    private void dfs(boolean vis[][] , int i , int j , int[][] board){
+        if(i < 0 || j < 0 || i >= board.length || j >= board[0].length ){
+            return;
+        }
+        if(board[i][j] == 0){
+            return;
+        }
+        if(vis[i][j] == true){
+            return;
+        }
+        vis[i][j] = true;
+        dfs(vis,i+1,j,board);
+        dfs(vis,i-1,j,board);
+        dfs(vis,i,j+1,board);
+        dfs(vis,i,j-1,board);
     }
+    
 }
