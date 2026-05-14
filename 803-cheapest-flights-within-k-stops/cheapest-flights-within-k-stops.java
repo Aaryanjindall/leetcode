@@ -25,26 +25,17 @@ class Solution {
             if(u == dst){
                 return w;
             }
-            if(stop > k+1){
+            if(stop+1 > k+1){
                 continue;
             }
             for(int neigh[] : graph.get(u)){
-
-    int next = neigh[0];
-    int weight = neigh[1];
-
-    if(stop + 1 <= k + 1 &&
-       w + weight < dist[next][stop+1]){
-
-        dist[next][stop+1] = w + weight;
-
-        pq.add(new int[]{
-            w + weight,
-            next,
-            stop + 1
-        });
-    }
-}
+                int next = neigh[0];
+                int weight = neigh[1];
+                if(w+weight < dist[next][stop+1]){
+                    dist[next][stop+1] = w+weight;
+                    pq.add(new int[]{dist[next][stop+1],next,stop+1});
+                }
+            }
         }
         return -1;
         
