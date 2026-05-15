@@ -1,73 +1,53 @@
 class Solution {
-    class Pair {
-        int r, c, t;
-        Pair(int row, int col, int time) {
-            r = row;
-            c = col;
-            t = time;
-        }
-    }
-
     public int orangesRotting(int[][] grid) {
-
+        int fresh = 0;
         int n = grid.length;
         int m = grid[0].length;
-        int cntfresh = 0;
-
-        Queue<Pair> q = new LinkedList<>();
-        int [][] vis = new int[n][m];
-
-        // Step 1: push all rotten oranges + count fresh
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-
-                if (grid[i][j] == 2) {
-                    q.add(new Pair(i, j, 0));
-                    vis[i][j] = 2;
-                } else {
-                    vis[i][j] = 0;
+        Queue<int[]> q = new LinkedList<>();
+        for(int i = 0 ; i < n ; i++){
+            for(int j = 0 ; j < m ; j++){
+                if(grid[i][j] == 2){
+                    q.add(new int[]{i,j});
                 }
-
-                if (grid[i][j] == 1) {
-                    cntfresh++;
+                else if(grid[i][j] == 1){
+                    fresh++;
                 }
             }
         }
-
+        int dx[] = {-1,0,1,0};
+        int dy[] = {0,-1,0,1};
         int time = 0;
-        int cnt = 0;
-
-        int[] delrow = {-1, 0, +1, 0};
-        int[] delcol = {0, +1, 0, -1};
-
-        // Step 2: BFS
-        while (!q.isEmpty()) {
-
-            Pair p = q.poll();
-            int r = p.r;
-            int c = p.c;
-            int t = p.t;
-
-            time = Math.max(time, t);
-
-            for (int i = 0; i < 4; i++) {
-                int nrow = r + delrow[i];
-                int ncol = c + delcol[i];
-
-                if (nrow >= 0 && nrow < n &&
-                    ncol >= 0 && ncol < m &&
-                    grid[nrow][ncol] == 1 &&
-                    vis[nrow][ncol] != 2) {
-
-                    q.add(new Pair(nrow, ncol, t + 1));
-                    vis[nrow][ncol] = 2;
-                    cnt++;
+        int newrotten = 0;
+        while(!q.isEmpty()){
+            int size = q.size();
+            boolean changed = false;
+            while(size-->0){
+                int curr[] = q.poll();
+                int r = curr[0];
+                int c = curr[1];
+                for(int i = 0 ; i < 4 ; i++){
+                    int nr = r+dx[i];
+                    int nc = c+dy[i];
+                    if(nr>=0 && nc >= 0 && nr < n && nc < m && grid[nr][nc] != 0){
+                        if(grid[nr][nc] == 1){
+                            grid[nr][nc] = 2;
+                            newrotten++;
+                            changed = true;
+                            q.add(new int[]{nr,nc});
+                        } 
+                    }
                 }
-            }
-        }
 
-        // Final check
-        if (cnt == cntfresh) return time;
+            }
+            if(changed){
+                time++;
+            }
+            
+        }
+        if(fresh == newrotten){
+            return time;
+        }
         return -1;
+
     }
 }
