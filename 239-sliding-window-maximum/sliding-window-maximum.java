@@ -6,8 +6,8 @@ class Solution {
         PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->b[0]-a[0]);
         for(int i = 0 ; i < n ; i++){
             pq.add(new int[]{nums[i],i});
-            while(pq.peek()[1] <= i-k){
-                pq.poll();
+            while(pq.peek()[1]<=i-k){
+                pq.remove();
             }
             if(i>=k-1){
                 ans[idx++] = pq.peek()[0];
