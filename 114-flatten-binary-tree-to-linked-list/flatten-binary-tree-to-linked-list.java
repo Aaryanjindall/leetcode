@@ -5,14 +5,14 @@ class Solution {
         }
         flatten(root.left);
         flatten(root.right);
-        TreeNode temp = root.right;
+        TreeNode rightt = root.right;
         root.right = root.left;
         root.left = null;
         TreeNode curr = root;
         while(curr.right != null){
             curr = curr.right;
         }
-        curr.right = temp;
-        
+        curr.right = rightt;
     }
+
 }
