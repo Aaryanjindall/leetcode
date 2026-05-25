@@ -4,15 +4,15 @@ class Solution {
         bt(list,n,k,1,new ArrayList<>());
         return list;
     }
-    private void bt(List<List<Integer>> list , int n , int k , int curr , List<Integer> res){
-        if(res.size()==k){
-            list.add(new ArrayList<>(res));
+    private void bt(List<List<Integer>> list , int n , int k , int curr , List<Integer> lister){
+        if(k == 0){
+            list.add(new ArrayList<>(lister));
             return;
         }
         for(int i = curr ; i <= n ; i++){
-            res.add(i);
-            bt(list,n,k,i+1,res);
-            res.remove(res.size()-1);
+            lister.add(i);
+            bt(list,n,k-1,i+1,lister);
+            lister.remove(lister.size()-1);
         }
     }
 }
