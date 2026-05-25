@@ -1,21 +1,20 @@
 class Solution {
     public List<List<Integer>> combinationSum(int[] cand, int tar) {
-        Arrays.sort(cand);
         List<List<Integer>> list = new ArrayList<>();
-        bt(cand,tar,list,new ArrayList<>(),0);
+        bt(list,cand,tar,0,new ArrayList<>());
         return list;
     }
-    private void bt(int cand[] , int tar , List<List<Integer>> list , List<Integer> lister , int curr){
+    private void bt(List<List<Integer>> list,int cand[] , int tar , int curr , List<Integer> lister){
         if(tar == 0){
             list.add(new ArrayList<>(lister));
             return;
         }
-        if(tar < 0){
+        if(tar<0){
             return;
         }
         for(int i = curr ; i < cand.length ; i++){
             lister.add(cand[i]);
-            bt(cand,tar-cand[i],list,lister,i);
+            bt(list,cand,tar-cand[i],i,lister);
             lister.remove(lister.size()-1);
         }
     }
