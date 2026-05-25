@@ -1,10 +1,10 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
-        bt(nums,list,0);
+        bt(list,nums,0);
         return list;
     }
-    private void bt(int nums[], List<List<Integer>> list, int curr){
+    private void bt(List<List<Integer>> list, int nums[] , int curr){
         if(curr == nums.length){
             List<Integer> lister = new ArrayList<>();
             for(int n : nums){
@@ -15,13 +15,13 @@ class Solution {
         }
         for(int i = curr ; i < nums.length ; i++){
             swap(nums,i,curr);
-            bt(nums,list,curr+1);
+            bt(list,nums,curr+1);
             swap(nums,i,curr);
         }
     }
-    private void swap(int nums[] , int i , int j){
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
+    private void swap(int nums [], int a , int b){
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
     }
 }
