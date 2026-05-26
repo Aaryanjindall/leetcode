@@ -1,17 +1,14 @@
 class Solution {
     public String minWindow(String s, String t) {
-        if(t.length()>s.length()){
-            return "";
-        }
-        int count = t.length();
         HashMap<Character,Integer> hm = new HashMap<>();
         for(int i = 0 ; i < t.length() ; i++){
             hm.put(t.charAt(i),hm.getOrDefault(t.charAt(i),0)+1);
         }
+        int count = t.length();
         int j = 0;
-        int st = 0;
         int len = 0;
-        int minlen = Integer.MAX_VALUE;
+        int min = Integer.MAX_VALUE;
+        int st = -1;
         for(int i = 0 ; i < s.length() ; i++){
             char ch = s.charAt(i);
             if(hm.containsKey(ch)){
@@ -22,9 +19,9 @@ class Solution {
             }
             while(count == 0){
                 len = i-j+1;
-                if(len < minlen){
+                if(len < min){
+                    min = len;
                     st = j;
-                    minlen = len;
                 }
                 char cha = s.charAt(j);
                 if(hm.containsKey(cha)){
@@ -36,9 +33,9 @@ class Solution {
                 j++;
             }
         }
-        if(minlen == Integer.MAX_VALUE){
+        if(min == Integer.MAX_VALUE){
             return "";
         }
-        return s.substring(st,st+minlen);
+        return s.substring(st,st+min);
     }
 }
