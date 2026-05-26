@@ -1,12 +1,13 @@
 class Solution {
     public int subarraysWithKDistinct(int[] nums, int k) {
-        //exactly k nikalne ke liye atmost(k) - atmost(k-1) krna pdega 
-        return atmost(nums,k)-atmost(nums,k-1);
+        int ans = solve(nums,k) - solve(nums,k-1);
+        return ans;
     }
-    private int atmost(int nums[] , int k){
+    private int solve(int nums[] , int k){
         HashMap<Integer,Integer> hm = new HashMap<>();
         int j = 0;
-        int count = 0;
+        int len = 0;
+        int sub = 0;
         for(int i = 0 ; i < nums.length ; i++){
             hm.put(nums[i],hm.getOrDefault(nums[i],0)+1);
             while(hm.size()>k){
@@ -16,10 +17,8 @@ class Solution {
                 }
                 j++;
             }
-            count += i-j+1;
+            sub += i-j+1;
         }
-        return count;
-
+        return sub;
     }
-
 }
