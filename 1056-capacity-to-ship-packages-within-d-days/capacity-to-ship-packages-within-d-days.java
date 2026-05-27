@@ -1,35 +1,34 @@
 class Solution {
     public int shipWithinDays(int[] weights, int days) {
-        int min = Integer.MIN_VALUE;
-        int max = 0;
+        int l = 0;
+        int h = 0;
         for(int w : weights){
-            min = Math.max(min,w);
-            max += w;
+            h += w;
+            l = Math.max(l,w);
         }
-        while(min < max){
-            int mid = min+(max-min)/2;
-            if(find(weights,days,mid)){
-                max = mid;
+        while(l<=h){
+            int mid = l+(h-l)/2;
+            if(poss(weights,days,mid)){
+                h = mid-1;
             }
             else{
-                min = mid+1;
+                l = mid+1;
             }
         }
-        return min;
-
+        return l;
     }
-    private boolean find(int w[] , int days , int mid){
-        int day = 1;
+    private boolean poss(int []arr , int days , int mid){
+        int k = 1;
         int sum = 0;
-        for(int x : w){
-            if(sum+x > mid){
-                day++;
-                sum = x;
+        for(int a : arr){
+            if(sum+a > mid){
+                sum = a;
+                k++;
             }
             else{
-                sum += x;
+                sum += a;
             }
         }
-        return day <= days;
+        return k<=days;
     }
 }
