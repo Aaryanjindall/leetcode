@@ -1,14 +1,14 @@
 class Solution {
     public int smallestDivisor(int[] nums, int th) {
         int l = 1;
-        int r = 0;
+        int h = Integer.MIN_VALUE;
         for(int n : nums){
-            r = Math.max(r,n);
+            h = Math.max(n,h);
         }
-        while(l<r){
-            int mid = l+(r-l)/2;
-            if(find(nums,mid,th)){
-                r = mid;
+        while(l<=h){
+            int mid = l+(h-l)/2;
+            if(poss(nums,th,mid)){
+                h = mid-1;
             }
             else{
                 l = mid+1;
@@ -16,11 +16,11 @@ class Solution {
         }
         return l;
     }
-    private boolean find(int []nums , int mid , int th){
-        int sum = 0;
-        for(int x : nums){
-            sum += (x+mid-1)/mid;
+    private boolean poss(int nums[] , int th , int mid){
+        int k = 0;
+        for(int n : nums){
+            k += (n+mid-1)/mid;
         }
-        return sum <= th;
+        return k<=th;
     }
 }
