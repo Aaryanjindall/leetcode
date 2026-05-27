@@ -1,14 +1,15 @@
 class Solution {
-    public int minEatingSpeed(int[] piles, int h) {
+    public int minEatingSpeed(int[] piles, int r) {
         int l = 1;
-        int r = 0;
-        for(int p : piles){
-            r = Math.max(r,p);
+        int max = 0;
+        for(int m : piles){
+            max = Math.max(m,max);
         }
-        while(l<r){
-            int mid = l+(r-l)/2;
-            if(isvalid(piles,mid,h)){
-                r = mid;
+        int h = max;
+        while(l<h){
+            int mid = l+(h-l)/2;
+            if(poss(piles,r,mid)){
+                h = mid;
             }
             else{
                 l = mid+1;
@@ -16,11 +17,15 @@ class Solution {
         }
         return l;
     }
-    private boolean isvalid(int []piles , int mid , int h){
-        int sum = 0;
-        for(int pile : piles){
-            sum += (pile+mid-1)/mid;
+    private boolean poss(int piles[] , int r , int mid){
+        int k = 0;
+        for(int p : piles){
+            k += p/mid;
+            int x = p%mid;
+            if(x>0){
+                k++;
+            }
         }
-        return sum <= h;
+        return k<=r;
     }
 }
