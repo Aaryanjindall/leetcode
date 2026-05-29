@@ -12,7 +12,6 @@ class Solution {
             return root;
         }
         else{
-            //leaf
             if(root.left == null && root.right == null){
                 return null;
             }
@@ -23,17 +22,20 @@ class Solution {
                 return root.left;
             }
             else{
-                TreeNode succ = inordersucc(root.right);
+                TreeNode succ = find(root.right);
                 root.val = succ.val;
                 root.right = deleteNode(root.right,succ.val);
-                return root;
+                
             }
         }
-    }
-    private TreeNode inordersucc(TreeNode root){
-        while(root.left != null){
-            root = root.left;
-        }
         return root;
+        
+    }
+    private TreeNode find(TreeNode root){
+        TreeNode curr = root;
+        while(curr.left != null){
+            curr = curr.left;
+        }
+        return curr;
     }
 }
