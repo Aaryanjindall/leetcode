@@ -1,8 +1,8 @@
 class Solution {
     class Pair{
         TreeNode root;
-        int idx;
-        Pair(TreeNode root, int idx){
+        int idx = 0;
+        Pair(TreeNode root,int idx){
             this.root = root;
             this.idx = idx;
         }
@@ -11,37 +11,28 @@ class Solution {
         if(root == null){
             return 0;
         }
-        Deque<Pair> dq = new ArrayDeque<>();
-        dq.add(new Pair(root,0));
-        int maxwidth = 1;
-
-        while(!dq.isEmpty()){
-            int size = dq.size();
-            int minidx = dq.peekFirst().idx;
-            int maxidx = dq.peekLast().idx;
+        Deque<Pair> q = new ArrayDeque<>();
+        int width = 1;
+        q.add(new Pair(root,0));
+        while(!q.isEmpty()){
+            int size = q.size();
+            int minidx = q.peekFirst().idx;
+            int maxidx = q.peekLast().idx;
+            width = Math.max(maxidx-minidx+1,width);
             for(int i = 0 ; i < size ; i++){
-                
-                Pair p = dq.poll();
+                Pair p = q.poll();
                 TreeNode curr = p.root;
-                int idx = p.idx;
-
-                if(curr.left != null ){
-                    dq.add(new Pair(curr.left , 2*idx + 1));
+                int index = p.idx;
+                if(curr.left != null){
+                    q.add(new Pair(curr.left,2*index+1));
                 }
                 if(curr.right != null){
-                    dq.add(new Pair(curr.right , 2*idx +2));
+                    q.add(new Pair(curr.right,2*index+2));
                 }
-
-                
-
-                
-
-                
-
             }
-            maxwidth = Math.max(maxwidth,maxidx-minidx+1);
-        }
 
-        return maxwidth;
+
+        }
+        return width;
     }
 }
