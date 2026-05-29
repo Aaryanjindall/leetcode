@@ -11,7 +11,8 @@ class Solution {
         }
         for(int neigh : graph[curr]){
             dfs(neigh,graph,lister,list);
+            lister.remove(lister.size()-1);
         }
-        lister.remove(lister.size()-1);
+        
     }
 }
