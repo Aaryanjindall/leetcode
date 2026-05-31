@@ -1,7 +1,6 @@
 class Solution {
     StringBuilder sb = new StringBuilder();
     public List<String> letterCombinations(String digits) {
-        
         List<String> list = new ArrayList<>();
         HashMap<Character,String> hm = new HashMap<>();
         hm.put('2',"abc");
@@ -20,11 +19,10 @@ class Solution {
             list.add(new StringBuilder(sb).toString());
             return;
         }
-        
-        char ch = dig.charAt(curr);
-        String str = hm.get(ch);
+        String str = hm.get(dig.charAt(curr));
         for(int i = 0 ; i < str.length() ; i++){
-            sb.append(str.charAt(i));
+            char ch = str.charAt(i);
+            sb.append(ch);
             bt(list,hm,dig,curr+1);
             sb.deleteCharAt(sb.length()-1);
         }
