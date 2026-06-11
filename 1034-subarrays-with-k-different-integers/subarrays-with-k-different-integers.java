@@ -1,13 +1,11 @@
 class Solution {
     public int subarraysWithKDistinct(int[] nums, int k) {
-        int ans = solve(nums,k) - solve(nums,k-1);
-        return ans;
+        return atmost(nums,k) - atmost(nums,k-1);
     }
-    private int solve(int nums[] , int k){
-        HashMap<Integer,Integer> hm = new HashMap<>();
-        int j = 0;
-        int len = 0;
+    private int atmost(int nums[] , int k){
         int sub = 0;
+        int j = 0;
+        HashMap<Integer,Integer> hm = new HashMap<>();
         for(int i = 0 ; i < nums.length ; i++){
             hm.put(nums[i],hm.getOrDefault(nums[i],0)+1);
             while(hm.size()>k){
