@@ -8,9 +8,6 @@ class Solution {
                 return true;
             }
         }
-
-        boolean leftt = hasPathSum(root.left,targetSum-root.val);
-        boolean rightt = hasPathSum(root.right,targetSum-root.val);
-        return leftt||rightt;
+        return hasPathSum(root.left,targetSum-root.val) || hasPathSum(root.right,targetSum- root.val);
     }
 }
