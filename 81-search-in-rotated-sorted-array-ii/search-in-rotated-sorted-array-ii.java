@@ -13,15 +13,16 @@ class Solution {
                 h--;
             }
             else if(nums[l]<=nums[mid]){
-                if(tar>=nums[l] && tar < nums[mid]){
-                    h = mid-1;
-                }
-                else{
-                    l = mid+1;
-                }
+                //left part sorted h 
+                if(tar >= nums[l] && tar < nums[mid]){
+    h = mid-1;
+}
+else{
+    l = mid+1;
+}
             }
             else{
-                if(tar>nums[mid] && tar <= nums[h]){
+                if(tar > nums[mid] && tar <= nums[h]){
                     l = mid+1;
                 }
                 else{
