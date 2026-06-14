@@ -13,9 +13,9 @@ class Solution {
             return solve(board,r,c+1);
         }
         for(char ch = '1' ; ch <= '9' ; ch++){
-            if(isposs(board,r,c,ch)){
+            if(isvalid(board,ch,r,c)){
                 board[r][c] = ch;
-                if (solve(board, r, c + 1)) {
+                if(solve(board,r,c+1)){
                     return true;
                 }
                 board[r][c] = '.';
@@ -23,7 +23,7 @@ class Solution {
         }
         return false;
     }
-    private boolean isposs(char[][] board, int r , int c , char ch){
+    private boolean isvalid(char[][]board , char ch , int r , int c){
         for(int i = 0 ; i < 9 ; i++){
             if(board[i][c] == ch){
                 return false;
