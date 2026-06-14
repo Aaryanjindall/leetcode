@@ -14,18 +14,16 @@ class Solution {
         bt(list,hm,digits,0);
         return list;
     }
-    private void bt(List<String> list ,HashMap<Character,String> hm,String dig , int curr){
-        if(curr == dig.length()){
+    private void bt(List<String> list ,HashMap<Character,String> hm , String dig , int cur){
+        if(cur == dig.length()){
             list.add(new StringBuilder(sb).toString());
             return;
         }
-        String str = hm.get(dig.charAt(curr));
+        String str = hm.get(dig.charAt(cur));
         for(int i = 0 ; i < str.length() ; i++){
-            char ch = str.charAt(i);
-            sb.append(ch);
-            bt(list,hm,dig,curr+1);
+            sb.append(str.charAt(i));
+            bt(list,hm,dig,cur+1);
             sb.deleteCharAt(sb.length()-1);
         }
     }
-    
 }
