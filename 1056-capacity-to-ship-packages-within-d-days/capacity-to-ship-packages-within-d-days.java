@@ -1,14 +1,14 @@
 class Solution {
-    public int shipWithinDays(int[] weights, int days) {
-        int l = 0;
+    public int shipWithinDays(int[] w, int d) {
+        int l = 1;
         int h = 0;
-        for(int w : weights){
-            h += w;
-            l = Math.max(l,w);
+        for(int x : w){
+            h += x;
+            l = Math.max(l, x);
         }
         while(l<=h){
             int mid = l+(h-l)/2;
-            if(poss(weights,days,mid)){
+            if(poss(mid,w,d)){
                 h = mid-1;
             }
             else{
@@ -17,18 +17,18 @@ class Solution {
         }
         return l;
     }
-    private boolean poss(int []arr , int days , int mid){
+    private boolean poss(int mid , int w[] , int d){
         int k = 1;
         int sum = 0;
-        for(int a : arr){
-            if(sum+a > mid){
-                sum = a;
+        for(int i = 0 ; i < w.length ; i++){
+            if(sum + w[i] > mid){
+                sum = w[i];
                 k++;
             }
             else{
-                sum += a;
+            sum += w[i];
             }
         }
-        return k<=days;
+        return k <= d;
     }
 }
