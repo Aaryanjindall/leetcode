@@ -1,56 +1,53 @@
 class Solution {
     List<List<String>> list = new ArrayList<>();
     public List<List<String>> solveNQueens(int n) {
-        char [][] board = new char[n][n];
-        for(int i = 0 ; i < n ; i++){
-            for(int j = 0 ; j < n ; j++){
-                board[i][j] = '.';
-            }
+        char board[][] = new char[n][n];
+        for(char b[] : board){
+            Arrays.fill(b,'.');
         }
         solve(board,0);
         return list;
     }
-    private void solve(char[][]board,int col){
-        if(col == board[0].length){
+    private void solve(char board[][] , int c){
+        if(c == board.length){
             list.add(construct(board));
             return;
         }
         for(int r = 0 ; r < board.length ; r++){
-            if(poss(board,r,col)){
-                board[r][col] = 'Q';
-                solve(board,col+1);
-                board[r][col] = '.';
+            if(isvalid(board,r,c)){
+                board[r][c] = 'Q';
+                solve(board,c+1);
+                board[r][c] = '.';
             }
         }
     }
-    private boolean poss(char [][]board,int r , int c){
+    private boolean isvalid(char board[][] , int r , int c){
         for(int col = c ; col >= 0 ; col--){
             if(board[r][col] == 'Q'){
                 return false;
             }
         }
-        for(int row = r-1 , col = c-1 ; row >= 0 && col >= 0 ; row--,col--){
+        for(int row = r , col = c ; row >= 0 && col >= 0 ; row--,col--){
             if(board[row][col] == 'Q'){
                 return false;
             }
         }
-        for(int row = r+1 , col = c-1 ; row < board.length && col >= 0 ; row++,col--){
+        for(int row = r , col = c ; row < board.length && col >= 0 ; row++,col--){
             if(board[row][col] == 'Q'){
                 return false;
             }
         }
         return true;
     }
-    private List<String> construct(char[][]board){
-        List<String> temp = new ArrayList<>();
+    private List<String> construct(char [][] board){
+        List<String> lister = new ArrayList<>();
         for(int i = 0 ; i < board.length ; i++){
             StringBuilder sb = new StringBuilder();
-            for(int j = 0 ; j < board[0].length ; j++){
+            for(int j = 0 ; j < board.length ; j++){
                 sb.append(board[i][j]);
             }
-            temp.add(sb.toString());
+            lister.add(sb.toString());
         }
-        return temp;
+        return lister;
     }
-
 }
