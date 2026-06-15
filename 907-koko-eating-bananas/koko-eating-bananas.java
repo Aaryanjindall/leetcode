@@ -1,15 +1,14 @@
 class Solution {
-    public int minEatingSpeed(int[] piles, int r) {
+    public int minEatingSpeed(int[] piles, int hours) {
         int l = 1;
-        int max = 0;
-        for(int m : piles){
-            max = Math.max(m,max);
+        int h = 0;
+        for(int x : piles){
+            h = Math.max(x,h);
         }
-        int h = max;
-        while(l<h){
-            int mid = l+(h-l)/2;
-            if(poss(piles,r,mid)){
-                h = mid;
+        while(l<=h){
+            int mid= l+(h-l)/2;
+            if(poss(mid,piles,hours)){
+                h = mid-1;
             }
             else{
                 l = mid+1;
@@ -17,15 +16,15 @@ class Solution {
         }
         return l;
     }
-    private boolean poss(int piles[] , int r , int mid){
-        int k = 0;
+    private boolean poss(int mid ,int[]piles ,int hour){
+        long k = 0;
         for(int p : piles){
             k += p/mid;
-            int x = p%mid;
-            if(x>0){
+            p = p%mid;
+            if(p > 0){
                 k++;
             }
         }
-        return k<=r;
+        return k <= hour;
     }
 }
