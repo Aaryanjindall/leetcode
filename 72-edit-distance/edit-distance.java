@@ -1,28 +1,29 @@
 class Solution {
-    public int minDistance(String word1, String word2) {
-        int dp[][] = new int [word1.length()+1][word2.length()+1];
+    public int minDistance(String w1, String w2) {
+        int n = w1.length();
+        int m = w2.length();
+        int dp[][] = new int[n+1][m+1];
         for(int d[] : dp){
             Arrays.fill(d,-1);
         }
-        return solve(dp,word1,word2,0,0);
-        
+        return solve(dp,w1,w2,0,0);
     }
-    private int solve(int dp[][],String word1 , String word2 , int s1 , int s2 ){
-        if(s1 == word1.length()){
-            return word2.length()-s2;
+    private int solve(int [][]dp , String w1 , String w2 , int i , int j){
+        if(i == w1.length()){
+            return w2.length()-j;
         }
-        if(s2 == word2.length()){
-            return word1.length()-s1;
+        if(j == w2.length()){
+            return w1.length()-i;
         }
-        if(dp[s1][s2] != -1){
-            return dp[s1][s2];
+        if(dp[i][j] != -1){
+            return dp[i][j];
         }
-        if(word1.charAt(s1) == word2.charAt(s2)){
-            return dp[s1][s2] = solve(dp,word1,word2,s1+1,s2+1);
+        if(w1.charAt(i) == w2.charAt(j)){
+            return dp[i][j] = solve(dp,w1,w2,i+1,j+1);
         }
-        int insert = solve(dp,word1,word2,s1,s2+1);
-        int delete = solve(dp,word1,word2,s1+1,s2);
-        int replace = solve(dp,word1,word2,s1+1,s2+1);
-        return dp[s1][s2] = 1+Math.min(insert,Math.min(delete,replace));
+        int insert = solve(dp,w1,w2,i,j+1);
+        int delete = solve(dp,w1,w2,i+1,j+1);
+        int replace = solve(dp,w1,w2,i+1,j);
+        return dp[i][j] = 1+Math.min(insert,Math.min(delete,replace));
     }
 }
