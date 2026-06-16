@@ -1,5 +1,5 @@
 class Solution {
-    public int numSquares(int n){
+    public int numSquares(int n) {
         int dp[] = new int[n+1];
         Arrays.fill(dp,-1);
         dp[0] = 0;
