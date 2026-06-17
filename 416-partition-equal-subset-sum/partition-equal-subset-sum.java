@@ -1,24 +1,28 @@
 class Solution {
     public boolean canPartition(int[] nums) {
+        int n = nums.length;
         int sum = 0;
-        for(int n : nums){
-            sum += n;
+        for(int x : nums){
+            sum += x;
         }
-        if(sum % 2 != 0){
+        if(sum % 2 == 1){
             return false;
         }
         int tar = sum/2;
-        int dp[][] = new int[nums.length][tar+1];
+        int dp[][] = new int[n+1][tar+1];
         for(int d[] : dp){
             Arrays.fill(d,-1);
         }
-        return solve(dp,tar,0,nums);
+        return solve(dp,nums,tar,0);
     }
-    private boolean solve(int dp[][] , int tar , int cur , int nums[]){
+    private boolean solve(int dp[][] , int nums[] , int tar , int cur){
         if(tar == 0){
             return true;
         }
-        if(cur == nums.length){
+        if(tar < 0){
+            return false;
+        }
+        if(cur >= nums.length){
             return false;
         }
         if(dp[cur][tar] != -1){
@@ -26,10 +30,10 @@ class Solution {
         }
         boolean take = false;
         if(nums[cur] <= tar){
-            take = solve(dp,tar-nums[cur],cur+1,nums);
+            take = solve(dp,nums,tar-nums[cur],cur+1);
         }
-        boolean skip = solve(dp,tar,cur+1,nums);
+        boolean skip = solve(dp,nums,tar,cur+1);
         dp[cur][tar] = (take || skip)?1:0;
-        return (take || skip);
+        return take||skip;
     }
 }
