@@ -1,29 +1,32 @@
 class Solution {
-    public boolean canPartitionKSubsets(int[] nums, int k){
+    public boolean canPartitionKSubsets(int[] nums, int k) {
         int sum = 0;
         for(int x : nums){
             sum += x;
         }
-        if(sum%k != 0){
+        if(sum % k != 0){
             return false;
         }
         int tar = sum/k;
-        boolean vis[] = new boolean[nums.length + 1];
-        return solve(nums,vis,k,tar,0,0);
+        boolean vis[] = new boolean[nums.length+1];
+        return solve(nums,k,tar,vis,0,tar);
     }
-    private boolean solve(int nums[] , boolean vis[] , int k , int tar , int cur,int cursum){
+    private boolean solve(int nums[] , int k , int tar , boolean vis[] , int cur,int target){
         if(k == 0){
             return true;
         }
-        if(cursum == tar){
-            return solve(nums,vis,k-1,tar,0,0);
+        if(tar == 0){
+            return solve(nums,k-1,target,vis,0,target);
+        }
+        if(cur >= nums.length || tar < 0){
+            return false;
         }
         for(int i = cur ; i < nums.length ; i++){
-            if(vis[i] || cursum + nums[i] > tar){
+            if(vis[i]){
                 continue;
             }
             vis[i] = true;
-            if(solve(nums,vis,k,tar,i+1,cursum+nums[i])){
+            if(solve(nums,k,tar-nums[i],vis,i+1,target)){
                 return true;
             }
             vis[i] = false;
