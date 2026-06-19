@@ -3,21 +3,21 @@ class Solution {
         if(n <= 1){
             return 0;
         }
-        boolean arr[] = new boolean[n];
-        Arrays.fill(arr,true);
-        arr[0] = false;
-        arr[1] = false;
+        boolean prime[] = new boolean[n];
+        Arrays.fill(prime,true);
+        prime[0] = false;
+        prime[1] = false;
         for(int i = 2 ; i*i < n ; i++){
             for(int j = i*i ; j < n ; j+=i){
-                if(arr[j] == false){
+                if(prime[j] == false){
                     continue;
                 }
-                arr[j] = false;
+                prime[j] = false;
             }
         }
         int count = 0;
         for(int i = 0 ; i < n ; i++){
-            if(arr[i] == true){
+            if(prime[i] == true){
                 count++;
             }
         }
